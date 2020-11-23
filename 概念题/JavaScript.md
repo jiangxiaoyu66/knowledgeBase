@@ -6,7 +6,7 @@
 
 # 执行上下文
 
-[解密 JavaScript 执行上下文](https://juejin.im/post/6844903847513554952#heading-5):偏重于解释代码如何
+[解密 JavaScript 执行上下文](https://juejin.im/post/6844903847513554952#heading-5):偏重于解释代码如何执行
 
 
 
