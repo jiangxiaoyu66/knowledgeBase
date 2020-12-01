@@ -220,6 +220,10 @@ key 是给每一个 vnode（虚拟节点）的唯一 id,可以依靠 key,更准�
 
 
 
+## XSS和CSRF都是什么，怎么防御？
+
+## 如何处理跨域问题？
+
 
 
 
@@ -254,9 +258,31 @@ CSS如果放置底部，浏览器阻止内容逐步呈现，浏览器在等待�
 
 
 
-## 浏览器输入url到显示的过程阐述？
+## 浏览器输入url到显示的过程阐述？ 
 
 [浏览器输入url到显示的过程阐述？](https://github.com/ljianshu/Blog/issues/24)
+
+- DNS 解析
+- TCP 三次握手
+- 发送请求，分析 url，设置请求报文(头，主体)
+- 服务器返回请求的文件 (html)
+- 浏览器渲染
+  - HTML parser --> DOM Tree
+    - 标记化算法，进行元素状态的标记
+    - dom 树构建
+  - CSS parser --> Style Tree
+    - 解析 css 代码，生成样式树
+  - attachment --> Render Tree
+    - 结合 dom树 与 style树，生成渲染树
+  - layout: 布局
+  - GPU painting: 像素绘制页面
+
+### 
+
+作者：郭东东
+链接：https://juejin.cn/post/6844903776512393224
+来源：掘金
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 
 
