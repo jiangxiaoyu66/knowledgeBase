@@ -148,6 +148,107 @@ proxy和reflect
 
 ## Proxy 与 Object.defineProperty 区别？
 
+1.使用 defineProperty 只能重定义属性的读取（get）和设置（set）行为，到了 ES6，提供了 Proxy，可以重定义更多的行为，比如 in、delete、函数调用等更多行为。
+
+2.使用 defineProperty 和 proxy 的区别，当使用 defineProperty，我们修改原来的 obj 对象就可以触发拦截，而使用 proxy，就必须修改代理对象，即 Proxy 的实例才可以触发拦截。
+
+参考文章：[ES6 系列之 defineProperty 与 proxy](https://github.com/mqyqingfeng/Blog/issues/107)
+
+>
+>
+>### 5. Proxy 相比于 defineProperty 的优势
+>
+>- 数组变化也能监听到
+>- 不需要深度遍历监听
+>
+>```
+>let data = { a: 1 }
+>let reactiveData = new Proxy(data, {
+>	get: function(target, name){
+>		// ...
+>	},
+>	// ...
+>})
+>```
+>
+>
+>作者：郭东东
+>链接：https://juejin.cn/post/6844903776512393224
+>来源：掘金
+>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -172,7 +273,27 @@ proxy和reflect
 
 ## js实现继承的思路讲一下？
 
-[深入学习js之——继承的多种方式和优缺点#13](https://www.lagou.com/lgeduarticle/66611.html)
+[深入学习js之——继承的多种方式和优缺点#13](https://www.lagou.com/lgeduarticle/66611.html)（黑哥说这个不行，垃圾）或者[JavaScript深入之继承的多种方式和优缺点](https://github.com/mqyqingfeng/Blog/issues/16)
+
+[[js继承、构造函数继承、原型链继承、组合继承、组合继承优化、寄生组合继承](https://segmentfault.com/a/1190000015216289)]
+
+
+
+## 异步的几种形式，分别的优缺点？
+
+[第 12 题：JS 异步解决方案的发展历程以及优缺点](https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/11)
+
+[JS 异步错误捕获二三事](https://juejin.cn/post/6844903830409183239)
+
+[JS异步解决方案的发展历程以及优缺点 ](https://github.com/sisterAn/blog/issues/29)
+
+## 讲一下event loop？
+
+## 函数柯里化讲一下？
+
+
+
+
 
 
 
