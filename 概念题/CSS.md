@@ -39,8 +39,6 @@ flex
 
 # BFC
 
-
-
 ## 是什么
 
 一个独立的渲染区域，内外部元素的定位互不影响
@@ -210,9 +208,16 @@ flex/absolute+transform
 
 
 
+# picture（浏览器分辨率自适应优化备用）
 
-
-
+```html
+<picture>
+  // type 属性允许你为 <source> 元素的 srcset 属性指向的资源指定一个 MIME 类型。如果用户代理不支持指定的类型，那么这个 <source> 元素会被跳过。
+  // srcset设置图片地址
+  <source srcset="mdn-logo.svg" type="image/svg+xml" media="(min-width:800px)"> 
+  <img src="mdn-logo.png" alt="MDN">
+</picture>
+```
 
 
 
