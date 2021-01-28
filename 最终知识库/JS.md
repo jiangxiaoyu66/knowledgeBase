@@ -1,34 +1,5 @@
 
 
-- 类型
-  - 类型种类
-  - 类型的判断
-  - 类型的转换
-  - 数据的深浅拷贝
-- 原型和原型链
-  - prototype和__proto__
-  - 执行上下文栈、变量对象、作用域链、this
-  - 执行上下文
-  - 闭包
-    - 变量提升
-    - v8垃圾回收
-  - call、apply、bind原理及实现
-  - 创建对象和继承
-  - oop编程思想
-- ES6
-  - let、const
-  - 箭头函数
-  - Set、Map、WeakSet和WeakMap
-- 异步
-  - Promise原理及实现
-  - Generator、async和await
-  - event loop、宏任务与微任务
-- 模块化
-  - CommonJS和ES6 module
-  - AMD和CMD区别（比较旧的可以忽略）
-
-
-
 
 
 [思齐JS](https://github.com/ChellyAI/note/tree/master/JavaScript)
@@ -36,6 +7,81 @@
 [JS 万字总结 重量级干货！！！](https://juejin.cn/post/6844904136161361933#heading-26)
 
 [【面试篇】寒冬求职季之你必须要懂的原生JS(上)](https://juejin.cn/post/6844903815053852685#heading-3)
+
+
+- [JS](#js)
+  - [数据类型](#数据类型)
+    - [Symbol](#symbol)
+    - [数据存储机制](#数据存储机制)
+    - [类型判断](#类型判断)
+      - [各种数据的判断](#各种数据的判断)
+        - [判断引用数据类型](#判断引用数据类型)
+        - [判断基本数据类型](#判断基本数据类型)
+    - [==和===的区别](#和的区别)
+      - [===](#)
+      - [==](#-1)
+    - [拷贝](#拷贝)
+      - [赋值](#赋值)
+      - [浅拷贝](#浅拷贝)
+      - [深拷贝](#深拷贝)
+      - [浅拷贝的实现方式：](#浅拷贝的实现方式)
+      - [深拷贝的实现方式：](#深拷贝的实现方式)
+    - [面试题](#面试题)
+      - [null和undefined的区别](#null和undefined的区别)
+      - [null是对象吗](#null是对象吗)
+      - [基本数据类型和复杂数据类型的区别](#基本数据类型和复杂数据类型的区别)
+  - [原型和原型链](#原型和原型链)
+    - [原型：](#原型)
+    - [原型链：](#原型链)
+  - [继承](#继承)
+  - [`class / extend`: 类声明与继承](#class--extend-类声明与继承)
+  - [执行上下文，作用域，闭包](#执行上下文作用域闭包)
+    - [执行上下文](#执行上下文)
+      - [**定义：**](#定义)
+      - [执行上下文的生命周期](#执行上下文的生命周期)
+      - [执行上下文栈](#执行上下文栈)
+      - [执行上下文的三个重要属性](#执行上下文的三个重要属性)
+        - [变量对象](#变量对象)
+        - [作用域链](#作用域链)
+          - [函数创建时](#函数创建时)
+          - [**函数激活**](#函数激活)
+          - [作用域链和执行上下文的区别](#作用域链和执行上下文的区别)
+        - [this](#this)
+          - [箭头函数的this和普通函数this的区别](#箭头函数的this和普通函数this的区别)
+    - [作用域](#作用域)
+      - [静态作用域和动态作用域的区别](#静态作用域和动态作用域的区别)
+      - [块级作用域和局部作用域](#块级作用域和局部作用域)
+      - [隐式全局变量和显示全局变量](#隐式全局变量和显示全局变量)
+    - [闭包](#闭包)
+  - [let，const，var的区别](#letconstvar的区别)
+    - [循环中的块级作用域](#循环中的块级作用域)
+      - [es5解决方案：](#es5解决方案)
+      - [es6解决方案：](#es6解决方案)
+        - [如果我们把 let 改成 const 呢](#如果我们把-let-改成-const-呢)
+        - [for in中的循环又会如何](#for-in中的循环又会如何)
+  - [apply、call、bind实现](#applycallbind实现)
+  - [同步与异步](#同步与异步)
+    - [同步](#同步)
+    - [异步](#异步)
+      - [异步的几种形式，分别的优缺点？](#异步的几种形式分别的优缺点)
+        - [1.回调函数](#1回调函数)
+        - [2.promise](#2promise)
+        - [3.Generator](#3generator)
+        - [4.async await](#4async-await)
+      - [介绍下 Promise.all 使用、原理实现及错误处理](#介绍下-promiseall-使用原理实现及错误处理)
+      - [讲一下event loop？](#讲一下event-loop)
+        - [宏任务，微任务](#宏任务微任务)
+  - [AMD、CMD、CommonJS与ES6模块化](#amdcmdcommonjs与es6模块化)
+  - [script标签之async与defer](#script标签之async与defer)
+  - [数组](#数组)
+    - [改变数组本身的api](#改变数组本身的api)
+  - [window之location、navigator](#window之locationnavigator)
+  - [setTimeout与setInterval](#settimeout与setinterval)
+- [es6](#es6)
+  - [super指向问题](#super指向问题)
+
+
+
 
 # JS
 
@@ -47,6 +93,27 @@
 - object
 
 NaN 是number中的一个特殊的值，可以通过Number.NaN 来访问
+
+
+
+### Symbol
+
+表示独一无二的值。它通过 `Symbol` 函数生成。如果对象使用 `Symbol` 属性名的类型，可以保证不会跟其他属性名冲突。
+
+注意：
+
+1. **Symbol作为属性名时，不能用点运算符。**
+
+	这是会因为点运算符后面总是字符串，所以不会读取 `Symbol` 作为标识名所指代的那个值。
+	
+	所以在手写 call、apply、bind 的时候使用的 Symbol 值需要用 `obj[Symbol]` 来执行对应的函数。
+
+2. **Symbol作为属性名时，不能被遍历。**
+   	`Symbol` 作为属性名，遍历对象的时候，该属性不会出现在 `for...in`、`for...of` 循环中，也不会被 `Object.keys()、Object.getOwnPropertyNames()、JSON.stringfy()`返回。
+
+  但它也不是私有属性，有一个 `Object.getOwnPropertySymbols()` 方法，可以获取指定对象的所有 `Symbol` 属性名，该方法返回一个数组，成员是当前对象的所有用作属性名的 `Symbol` 值。
+
+
 
 ### 数据存储机制
 
@@ -758,6 +825,15 @@ Scope = [AO].concat([[scope]]);
 
 ![this](https://i.loli.net/2021/01/20/SdY4HgeFfEpV1CK.png)
 
+>如果进入执行环境时没有设置 `this` 的值
+>
+>- 严格模式下保持为undefined
+>- 非严格模式下为global或者window。分别对应的是node环境和浏览器
+>
+>
+
+
+
 注意：
 
 > [window.setTimeout-关于"`this`"的问题](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setTimeout#%E5%85%B3%E4%BA%8Ethis%E7%9A%84%E9%97%AE%E9%A2%98)
@@ -769,6 +845,16 @@ Scope = [AO].concat([[scope]]);
 [思齐this](https://github.com/ChellyAI/note/blob/master/JavaScript/3%E3%80%81%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E3%80%81this%E5%92%8C%E9%97%AD%E5%8C%85.md#other)
 
 [一次笔试引发的关于setTimeout的this的思考](https://juejin.cn/post/6844903745147387918)
+
+
+
+###### 箭头函数的this和普通函数this的区别
+
+1.箭头函数的this在函数声明的时候决定，普通函数的this在函数被调用的时候决定
+
+2.箭头函数不可以用作构造函数来创建对象，普通函数可以
+
+3.箭头函数没有arguments对象，但是可以用...rest结构来代替；普通函数有arguments对象
 
 
 
@@ -1070,9 +1156,292 @@ funcs[0]()
 
 ## apply、call、bind实现
 
+call
+
+思路：把函数作为对象的属性，这样就相当于使用对象来调用函数，即this指向为指定的对象
+
+```js
+
+Function.prototype.call = function(obj = window, ...args) {  // 指定的 this 如果是 undefined，就得用 window 对象
+  const func = Symbol('func'); // 保持属性名的唯一性，防止和对象中的原有属性名发生冲突
+  obj[func] = this; // Symbol类型的属性在对象中不能用.来访问
+
+  const result = obj[func](...args);
+  delete obj[func]; // 使用指定对象调用函数后，把函数从指定对象中删除
+
+  return result;
+}
+```
+
+apply
+
+```js
+Function.prototype.apply2 = function(obj = window, params) {
+  const func = Symbol('func');
+  obj[func] = this;
+
+  const result = obj[func](...params); // apply传过来的是一个数组，所有直接结构就好了
+  delete obj[func];
+
+  return result;
+}
+```
+
+bind
+
+```js
+Function.prototype.bindNew = function (obj, ...args) {
+  if (typeof this !== "function") { throw Error("not a function.") } // 是否为函数_若不考虑参数类型可以省略
+  return (...newArgs) => this.apply(obj, [...args, ...newArgs]); // 返回函数
+};
+```
+
+
+
 ## 同步与异步
 
+### 同步
+
+定义：只有当前任务执行完成，才会进入下一个任务。
+
+注意：所有同步代码只会进入调用栈，同步代码会阻塞主线程的执行，而且会优先与其他非同步代码执行
+
+### 异步
+
+定义：指当前执行的代码会进入异步线程处理之后才会再由主线程处理回调
+
+#### 异步的几种形式，分别的优缺点？
+
+>1.回调函数。解决了同步的问题，但本身存在回调地狱的问题，不能用try catch捕获异常，不能return
+>
+>2.promise。采用级联代替回调，解决回调地狱，但是promise无法取消，捕获错误需要通过回调函数进行捕获
+>
+>3.generator。可以控制函数的执行
+>
+>4.async await。代码清晰，没有回调函数的问题。但在处理相互之间没有依赖的多个异步操作的时候，会导致性能降低，不如用peomise.all
+
+
+
+##### 1.回调函数
+
+优点：解决了同步的问题（避免出现任务阻塞）
+
+**缺点：回调地狱，不能用 try catch 捕获错误，不能 return**
+
+回调地狱的根本问题在于：
+
+1.耦合度太高，牵一发而动全身
+
+2.嵌套过多，整体调试困难，只能把每一个嵌套函数当作一个单元来调试
+
+##### 2.promise
+
+优点：
+
+采用级联的方式代替嵌套回调，解决了回调地狱的问题：
+
+1.通过return promise函数，来实现多个异步操作的顺序执行
+
+2.并且在 `Promise` 中我们也可以实现分级的 `catch`
+
+缺点：
+
+1.promsie无法取消（状态中只有pending，reject，resolve，没有所谓的 cancel 状态。cancel 的加入会带来更多的状态问题，并不适合 Promise 这一模式来处理）
+
+2.**错误需要通过回调函数来捕获**(reject函数)
+
+参考：
+
+[为什么说promise不能取消是一个缺点](https://m.imooc.com/wenda/detail/473806)
+
+##### 3.Generator
+
+特点：**控制函数执行**
+
+```js
+function *fetch() {
+    yield ajax('XXX1', () => {})
+    yield ajax('XXX2', () => {})
+    yield ajax('XXX3', () => {})
+}
+let it = fetch()
+let result1 = it.next()
+let result2 = it.next()
+let result3 = it.next()
+```
+
+##### 4.async await
+
+**优点是：代码清晰，不用像 Promise 写一大堆 then 链，处理了回调地狱的问题**
+
+缺点：await 将异步代码改造成同步代码，**如果多个异步操作没有依赖性而使用 await 会导致性能上的降低，不如用Promise.all**
+
+```js
+async function test() {
+  // 以下代码没有依赖性的话，完全可以使用 Promise.all 的方式
+  // 如果有依赖性的话，其实就是解决回调地狱的例子了
+  await fetch('XXX1')
+  await fetch('XXX2')
+  await fetch('XXX3')
+}
+```
+
+下面来看一个使用 await 的例子：
+
+```js
+let a = 0
+let b = async () => {
+  a = a + await 10
+  console.log('2', a) // -> '2' 10
+}
+b()
+a++
+console.log('1', a) // -> '1' 1
+```
+
+对于以上代码你可能会有疑惑，让我来解释下原因
+
+- 首先函数 `b` 先执行，在执行到 `await 10` 之前变量 `a` 还是 0，因为 `await` 内部实现了 `generator` ，**`generator` 会保留堆栈中东西，所以这时候 `a = 0` 被保存了下来**
+- 因为 `await` 是异步操作，后来的表达式不返回 `Promise` 的话，就会包装成 `Promise.reslove(返回值)`，然后会去执行函数外的同步代码
+- 同步代码执行完毕后开始执行异步代码，将保存下来的值拿出来使用，这时候 `a = 0 + 10`
+
+上述解释中提到了 `await` 内部实现了 `generator`，其实 `await` 就是 `generator` 加上 `Promise`的语法糖，且内部实现了自动执行 `generator`。如果你熟悉 co 的话，其实自己就可以实现这样的语法糖。
+
+> Generator 函数不是这样，它执行产生的上下文环境，一旦遇到`yield`命令，就会暂时退出堆栈，但是并不消失，里面的所有变量和对象会冻结在当前状态。等到对它执行`next`命令时，这个上下文环境又会重新加入调用栈，冻结的变量和对象恢复执行。
+>
+> 参考：[Generator 与上下文](https://es6.ruanyifeng.com/#docs/generator)
+
+
+
+对比下面promise，promise就不会对上下文文的变量进行冻结
+
+```js
+let a = 0;
+let b = () => {
+    new Promise((resolve) => {
+        resolve(10);
+    })
+    .then(value => {
+        a = a + value;
+        console.log('qqq', a);
+    });
+}
+b();
+a++;
+console.log('www', a);
+```
+
+参考：
+
+[JS异步解决方案的发展历程以及优缺点 #29](https://github.com/sisterAn/blog/issues/29)
+
+
+
+#### 介绍下 Promise.all 使用、原理实现及错误处理
+
+Promise是异步编程解决方案之一。
+
+Promise.all()接受一个由promise任务组成的数组，可以同时处理多个promise任务，当所有的任务都执行完成时，Promise.all()返回resolve，但当有一个失败(reject)，则返回失败的信息，即使其他promise执行成功，也会返回失败。
+
+参考：
+
+[第 80 题：介绍下 Promise.all 使用、原理实现及错误处理](https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/130#)#130
+
+
+
+
+
+
+
+#### 讲一下event loop？
+
+主线程是为了解决Js单线程问题而出现的处理异步任务的一种循环机制，不断从队列中读取任务进行处理。
+
+此机制具体如下:
+
+主线程（或者说，执行栈）会不断从任务队列中按顺序取任务执行，
+
+每执行完一个任务都会检查microtask队列是否为空（执行完一个任务的具体标志是函数执行栈为空）。
+
+如果不为空则会一次性执行完所有microtask。然后再进入下一个循环去任务队列中取下一个任务执行。
+
+
+
+1.在全局执行上下文中，先执行同步任务，然后微任务，然后依次执行宏任务
+
+2.在宏任务中，先执行**当前宏任务中**的同步任务，然后清空**当前宏任务中**的微任务，然后执行**当前宏任务中**的宏任务
+
+总结：在当前执行上下文中，先执行同步任务，然后微任务，然后宏任务（这里的同步任务，微任务和宏任务都只是针对当前执行上下文）
+
+先看一个简单的示例：
+
+```js
+setTimeout(()=>{
+    console.log("setTimeout1");
+    Promise.resolve().then(data => {
+        console.log(222);
+    });
+});
+setTimeout(()=>{
+    console.log("setTimeout2");
+});
+Promise.resolve().then(data=>{
+    console.log(111);
+});
+```
+
+思考一下, 运行结果是什么？
+
+运行结果为:
+
+```js
+111
+setTimeout1
+222
+setTimeout2
+```
+
+
+
+##### 宏任务，微任务
+
+宏任务（macrotask）也叫tasks，微任务（microtask）也叫jobs，JavaScript有两种队列，分别是macro task queue和micro task queue。任务将放置到对应的任务队列中。
+
+  是宏任务的异步任务有：
+
+- setTimeout
+- setInterval
+- setImmediate(Node)
+- requestAnimationFrame(browser)
+- UI rendering(browser)
+- I/O
+
+  是微任务的异步任务有：
+
+- process.nextTick(Node)这个任务会插队到其他微任务前面
+- Promise
+- Object.observe
+- MutationObserver
+
+
+
+
 ## AMD、CMD、CommonJS与ES6模块化
+
+
+
+
+## script标签之async与defer
+
+## 数组
+
+### 改变数组本身的api
+
+## window之location、navigator
+
+## setTimeout与setInterval
+
+
 
 # es6
 
@@ -1144,14 +1513,6 @@ react里面类组件中，super(props)其实就是：
 2. 将父类的实例对象和属性通过props传给子类
 
 循环中的块级作用域
-
-
-
-
-
-
-
-
 
 
 
