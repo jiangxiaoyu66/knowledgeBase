@@ -258,3 +258,10 @@ react提出的diff算法，只需要对比同级元素，这样算法复杂度�
 
    function组件中因为函数是直接声明的，不被使用会被报错。
 
+
+
+
+
+## 修改源码
+
+[前端如何修改组件库源码来封装符合自己需求的组件？](https://mp.weixin.qq.com/s?__biz=MzA4Nzg0MDM5Nw==&mid=2247491904&idx=1&sn=c9057c9a25b88f16f96959eb2c77a02d&chksm=9031e2a2a7466bb49fa68741b50b3ed986f5d80ff341fbe4644ad15b683716450e25a75e286a&mpshare=1&scene=1&srcid=0128efnegD3NsuWLkJONCNim&sharer_sharetime=1611799005693&sharer_shareid=9662d5a4895340a8fd52f26052c3f72b)
